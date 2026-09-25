@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" data-kind="project">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Morning briefing">
+<title>Data pipeline (EXAMPLE) — Morning Briefing</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <p class="brand"><a href="index.html">Morning Briefing</a></p>
+    <p class="as-of">As of <time datetime="2026-09-25T06:30:00Z">2026-09-25 06:30 UTC</time></p>
+  </div>
+</header>
+<main id="main" class="wrap">
+<header class="project-head">
+  <h1 class="page-title">Data pipeline (EXAMPLE)</h1>
+  <p class="headline">EXAMPLE DATA — the pipeline is green and 3 tasks shipped, but one worker pool is 1.2x over its quota mid-day.</p>
+</header>
+
+<section id="tiles" class="section">
+  <h2>Key numbers</h2>
+  <div class="tiles"><div class="tile"><p class="tile-label">Tasks shipped</p><p class="tile-value">3<span class="tile-unit">tasks</span></p><p class="tile-delta up">+3 tasks</p><p class="tile-note">since yesterday</p></div><div class="tile"><p class="tile-label">Queue depth</p><p class="tile-value">7<span class="tile-unit">tasks</span></p><p class="tile-delta down">-5 tasks</p><p class="tile-note">under the 20 cap</p></div><div class="tile"><p class="tile-label">Worker pool peak</p><p class="tile-value">120<span class="tile-unit tight">%</span></p><p class="tile-delta up">+20 pts</p><p class="tile-note">vs daily quota</p></div><div class="tile"><p class="tile-label">Cost today</p><p class="tile-value">42.5<span class="tile-unit">USD</span></p><p class="tile-delta down">-8.1 USD</p><p class="tile-note">estimate</p></div><div class="tile"><p class="tile-label">Open review PRs</p><p class="tile-value">4<span class="tile-unit">PRs</span></p><p class="tile-note">two from yesterday</p></div><div class="tile"><p class="tile-label">Build</p><p class="tile-value">green</p><p class="tile-delta flat">stable</p><p class="tile-note">EXAMPLE</p></div></div>
+</section>
+<section id="timeline" class="section">
+  <h2>What happened</h2>
+  <ol class="timeline"><li><span class="t-time">01:15</span><span class="t-text">Retry fix merged; the flaky test rate fell from 6% to 1%.</span></li><li><span class="t-time">03:00</span><span class="t-text">Three tasks completed: schema check, CSV export, dark mode.</span></li><li><span class="t-time">05:20</span><span class="t-text"><a href="https://example.com/pipeline/metrics/usage">Worker pool briefly peaked at 120% of quota.</a></span></li><li><span class="t-time">06:10</span><span class="t-text">Queue drained to 7 tasks.</span></li></ol>
+</section>
+<section id="results" class="section">
+  <h2>Results</h2>
+  <figure class="card chart-card"><figcaption><h3>Average task duration by stage</h3><p class="kind">hbar</p></figcaption><svg class="chart hbar" viewBox="0 0 640 190" width="100%" height="190" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Average task duration by stage"><text class="cat" x="74" y="31" text-anchor="end">Plan</text><rect class="track" x="84" y="22" width="484" height="12" rx="2"/><rect class="s0 bar" x="84" y="22" width="50.95" height="12" rx="2"/><text class="value" x="142.95" y="31">4 min</text><text class="cat" x="74" y="61" text-anchor="end">Implement</text><rect class="track" x="84" y="52" width="484" height="12" rx="2"/><rect class="s0 bar" x="84" y="52" width="484" height="12" rx="2"/><text class="value" x="576" y="61">38 min</text><text class="cat" x="74" y="91" text-anchor="end">Review</text><rect class="track" x="84" y="82" width="484" height="12" rx="2"/><rect class="s0 bar" x="84" y="82" width="152.84" height="12" rx="2"/><text class="value" x="244.84" y="91">12 min</text><text class="cat" x="74" y="121" text-anchor="end">Verify</text><rect class="track" x="84" y="112" width="484" height="12" rx="2"/><rect class="s0 bar" x="84" y="112" width="114.63" height="12" rx="2"/><text class="value" x="206.63" y="121">9 min</text><text class="cat" x="74" y="151" text-anchor="end">Deploy</text><rect class="track" x="84" y="142" width="484" height="12" rx="2"/><text class="unknown" x="92" y="151">—</text></svg><p class="chart-note">EXAMPLE — last 24h</p></figure><figure class="card chart-card"><figcaption><h3>Time by outcome</h3><p class="kind">stacked</p></figcaption><svg class="chart" viewBox="0 0 640 300" width="100%" height="300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Time by outcome"><line class="grid" x1="48" y1="244" x2="508" y2="244"/><text class="tick" x="40" y="247" text-anchor="end">0</text><line class="grid" x1="48" y1="190" x2="508" y2="190"/><text class="tick" x="40" y="193" text-anchor="end">50</text><line class="grid" x1="48" y1="136" x2="508" y2="136"/><text class="tick" x="40" y="139" text-anchor="end">100</text><line class="grid" x1="48" y1="82" x2="508" y2="82"/><text class="tick" x="40" y="85" text-anchor="end">150</text><line class="grid" x1="48" y1="28" x2="508" y2="28"/><text class="tick" x="40" y="31" text-anchor="end">200</text><line class="axis" x1="48" y1="244" x2="508" y2="244"/><rect class="s0 bar" x="131" y="114.4" width="64" height="129.6"/><rect class="s1 bar" x="131" y="82" width="64" height="32.4"/><rect class="s2 bar" x="131" y="49.6" width="64" height="32.4"/><text class="cat" x="163" y="264" text-anchor="middle">AM</text><rect class="s0 bar" x="361" y="146.8" width="64" height="97.2"/><rect class="s1 bar" x="361" y="82" width="64" height="64.8"/><rect class="s2 bar" x="361" y="49.6" width="64" height="32.4"/><text class="cat" x="393" y="264" text-anchor="middle">PM</text><rect class="s0 bar" x="516" y="34" width="12" height="12" rx="2"/><text class="legend" x="534" y="45">shipped</text><rect class="s1 bar" x="516" y="52" width="12" height="12" rx="2"/><text class="legend" x="534" y="63">blocked</text><rect class="s2 bar" x="516" y="70" width="12" height="12" rx="2"/><text class="legend" x="534" y="81">idle</text><text class="legend" x="516" y="99">unit: min</text></svg><p class="chart-note">EXAMPLE — where the day went</p></figure><figure class="card chart-card"><figcaption><h3>Worker-pool quota (hit-list)</h3><p class="kind">quota</p></figcaption><svg class="chart quota" viewBox="0 0 640 184" width="100%" height="184" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Worker-pool quota (hit-list)"><text class="cat" x="140" y="37" text-anchor="end">pool-a</text><rect class="track" x="150" y="27" width="340" height="14" rx="3"/><rect class="s4 bar" x="150" y="27" width="340" height="14" rx="3"/><text class="value" x="498" y="37">120% (12000 / 10000)</text><rect class="badge-bg" x="576" y="25" width="58" height="16" rx="8"/><text class="badge" x="605" y="37" text-anchor="middle">HIT LIMIT</text><text class="legend" x="150" y="51">units</text><text class="cat" x="140" y="71" text-anchor="end">pool-b</text><rect class="track" x="150" y="61" width="340" height="14" rx="3"/><rect class="s0 bar" x="150" y="61" width="251.6" height="14" rx="3"/><text class="value" x="498" y="71">74% (7400 / 10000)</text><text class="legend" x="150" y="85">units</text><text class="cat" x="140" y="105" text-anchor="end">pool-c</text><rect class="track" x="150" y="95" width="340" height="14" rx="3"/><rect class="s0 bar" x="150" y="95" width="88.4" height="14" rx="3"/><text class="value" x="498" y="105">26% (2600 / 10000)</text><text class="legend" x="150" y="119">units</text><text class="cat" x="140" y="139" text-anchor="end">pool-d</text><rect class="track" x="150" y="129" width="340" height="14" rx="3"/><text class="unknown" x="158" y="139">—</text><text class="legend" x="150" y="153">units</text></svg><p class="chart-note">EXAMPLE — anything at or above 100% gets a HIT LIMIT badge</p></figure>
+</section>
+<section id="decisions" class="section">
+  <h2>Decisions needed</h2>
+  <article class="card decision"><p class="d-num">Decision 1</p><h3>Shift tonight&#x27;s batch to pool-b to keep pool-a under quota?</h3><ul class="options"><li class="rec"><span class="opt-letter">A</span>A) Shift the batch to pool-b for tonight only.<span class="rec-badge">recommended</span></li><li class=""><span class="opt-letter">B</span>B) Raise pool-a&#x27;s quota for the week.</li><li class=""><span class="opt-letter">C</span>C) Let pool-a run hot and accept the overage.</li></ul></article>
+</section>
+<section id="risks" class="section">
+  <h2>Risks</h2>
+  <ul class="risks"><li>pool-a can breach its quota again during the nightly batch. <span class="note">EXAMPLE</span><span class="sev sev-high">high</span></li><li>EXAMPLE risk: the CSV export has no size cap yet.</li><li>One reviewer is out tomorrow.<span class="sev sev-low">low</span></li></ul>
+</section>
+<section id="next24h" class="section">
+  <h2>Next 24 hours</h2>
+  <ul class="next24h"><li>Nightly batch at 23:00.<span class="assignee">team-pipeline</span></li><li>Review the two oldest PRs before noon.</li><li>Add a size cap to the CSV export.<span class="assignee">team-a</span></li></ul>
+</section>
+<section id="evidence" class="section">
+  <h2>Evidence</h2>
+  <ul class="evidence"><li><a href="https://example.com/pipeline/metrics/usage">Worker usage metrics (EXAMPLE)</a></li><li><a href="https://example.com/pipeline/board">Task board (EXAMPLE)</a></li><li><a href="../example-pipeline.html">CI history (EXAMPLE)</a></li></ul>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Built <time datetime="2026-09-25T06:30:00Z">2026-09-25 06:30 UTC</time> · source <code>unknown</code></p>
+    <p class="muted">Generated by build.py from data/example-pipeline.json · no secrets, numbers and links only.</p>
+  </div>
+</footer>
+</body>
+</html>

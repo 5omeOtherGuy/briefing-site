@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" data-kind="{{page_kind}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Morning briefing">
+<title>{{title}}</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <p class="brand"><a href="index.html">Morning Briefing</a></p>
+    <p class="as-of">As of <time datetime="{{as_of_iso}}">{{as_of_human}}</time></p>
+  </div>
+</header>
+<main id="main" class="wrap">
+{{content}}
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Built <time datetime="{{build_iso}}">{{build_human}}</time> · source <code>{{commit}}</code></p>
+    <p class="muted">{{footer_note}}</p>
+  </div>
+</footer>
+</body>
+</html>

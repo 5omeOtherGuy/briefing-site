@@ -1,0 +1,83 @@
+{
+  "project": "Data pipeline (EXAMPLE)",
+  "as_of": "2026-09-25T06:30:00Z",
+  "headline": "EXAMPLE DATA — the pipeline is green and 3 tasks shipped, but one worker pool is 1.2x over its quota mid-day.",
+  "tiles": [
+    {"label": "Tasks shipped", "value": 3, "unit": "tasks", "delta": 3, "note": "since yesterday"},
+    {"label": "Queue depth", "value": 7, "unit": "tasks", "delta": -5, "note": "under the 20 cap"},
+    {"label": "Worker pool peak", "value": 120, "unit": "%", "delta": "+20 pts", "note": "vs daily quota"},
+    {"label": "Cost today", "value": 42.5, "unit": "USD", "delta": -8.1, "note": "estimate"},
+    {"label": "Open review PRs", "value": 4, "unit": "PRs", "delta": null, "note": "two from yesterday"},
+    {"label": "Build", "value": "green", "unit": null, "delta": "stable", "note": "EXAMPLE"}
+  ],
+  "timeline": [
+    {"time": "01:15", "text": "Retry fix merged; the flaky test rate fell from 6% to 1%."},
+    {"time": "03:00", "text": "Three tasks completed: schema check, CSV export, dark mode."},
+    {"time": "05:20", "text": "Worker pool briefly peaked at 120% of quota.", "link": "https://example.com/pipeline/metrics/usage"},
+    {"time": "06:10", "text": "Queue drained to 7 tasks."}
+  ],
+  "results": [
+    {
+      "title": "Average task duration by stage",
+      "kind": "hbar",
+      "unit": "min",
+      "note": "EXAMPLE — last 24h",
+      "series": [
+        {"label": "Plan", "value": 4},
+        {"label": "Implement", "value": 38},
+        {"label": "Review", "value": 12},
+        {"label": "Verify", "value": 9},
+        {"label": "Deploy", "value": null}
+      ]
+    },
+    {
+      "title": "Time by outcome",
+      "kind": "stacked",
+      "unit": "min",
+      "note": "EXAMPLE — where the day went",
+      "series": [
+        {"label": "AM", "segments": [{"label": "shipped", "value": 120}, {"label": "blocked", "value": 30}, {"label": "idle", "value": 30}]},
+        {"label": "PM", "segments": [{"label": "shipped", "value": 90}, {"label": "blocked", "value": 60}, {"label": "idle", "value": 30}]}
+      ]
+    },
+    {
+      "title": "Worker-pool quota (hit-list)",
+      "kind": "quota",
+      "unit": "units",
+      "note": "EXAMPLE — anything at or above 100% gets a HIT LIMIT badge",
+      "series": [
+        {"label": "pool-a", "used": 12000, "limit": 10000},
+        {"label": "pool-b", "used": 7400, "limit": 10000},
+        {"label": "pool-c", "used": 2600, "limit": 10000},
+        {"label": "pool-d", "used": null, "limit": 10000}
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "n": 1,
+      "question": "Shift tonight's batch to pool-b to keep pool-a under quota?",
+      "recommended": "A",
+      "options": [
+        "A) Shift the batch to pool-b for tonight only.",
+        "B) Raise pool-a's quota for the week.",
+        "C) Let pool-a run hot and accept the overage."
+      ]
+    }
+  ],
+  "risks": [
+    {"text": "pool-a can breach its quota again during the nightly batch.", "severity": "high", "note": "EXAMPLE"},
+    "EXAMPLE risk: the CSV export has no size cap yet.",
+    {"text": "One reviewer is out tomorrow.", "severity": "low"}
+  ],
+  "next24h": [
+    {"text": "Nightly batch at 23:00.", "assignee": "team-pipeline", "when": "23:00"},
+    "Review the two oldest PRs before noon.",
+    {"text": "Add a size cap to the CSV export.", "assignee": "team-a"}
+  ],
+  "evidence": [
+    {"label": "Worker usage metrics (EXAMPLE)", "link": "https://example.com/pipeline/metrics/usage"},
+    {"label": "Task board (EXAMPLE)", "link": "https://example.com/pipeline/board"},
+    {"label": "CI history (EXAMPLE)", "link": "../example-pipeline.html"}
+  ]
+}

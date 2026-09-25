@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "briefing.schema.json",
+  "title": "Morning briefing data contract",
+  "description": "One file per project at data/<project>.json. Numbers, summaries and links only; never secrets, tokens or private prompts. Unknown values must be null (rendered as an em dash by build.py), never 0.",
+  "type": "object",
+  "required": ["project", "as_of", "headline"],
+  "properties": {
+    "project": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Human-readable project name shown in the page header."
+    },
+    "as_of": {
+      "type": "string",
+      "minLength": 1,
+      "description": "When this briefing's data was collected. ISO 8601, e.g. 2026-09-25T06:30:00Z."
+    },
+    "headline": {
+      "type": "string",
+      "minLength": 1,
+      "description": "One sentence the reader should see if they read nothing else."
+    },
+    "tiles": {
+      "type": "array",
+      "description": "Up to ~6 key numbers shown as a grid at the top.",
+      "items": {"$ref": "#/$defs/tile"}
+    },
+    "timeline": {
+      "type": "array",
+      "description": "What happened, oldest first.",
+      "items": {"$ref": "#/$defs/timelineItem"}
+    },
+    "results": {
+      "type": "array",
+      "description": "Charts. The series shape is fixed by kind; see README.md.",
+      "items": {"$ref": "#/$defs/result"}
+    },
+    "decisions": {
+      "type": "array",
+      "description": "Open questions, each with the recommended option flagged.",
+      "items": {"$ref": "#/$defs/decision"}
+    },
+    "risks": {
+      "type": "array",
+      "description": "Known risks. Plain strings or objects with an optional severity.",
+      "items": {"$ref": "#/$defs/riskItem"}
+    },
+    "next24h": {
+      "type": "array",
+      "description": "What happens in the next 24 hours. Plain strings or objects with an optional assignee.",
+      "items": {"$ref": "#/$defs/nextItem"}
+    },
+    "evidence": {
+      "type": "array",
+      "description": "Links a reader can follow for the raw numbers.",
+      "items": {"$ref": "#/$defs/link"}
+    }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "nullableNumber": {"type": ["number", "null"]},
+    "nullableString": {"type": ["string", "null"]},
+    "textValue": {"type": ["number", "string", "null"]},
+    "tile": {
+      "type": "object",
+      "required": ["label", "value"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "value": {"$ref": "#/$defs/textValue"},
+        "unit": {"$ref": "#/$defs/nullableString"},
+        "delta": {"$ref": "#/$defs/textValue"},
+        "note": {"$ref": "#/$defs/nullableString"}
+      },
+      "additionalProperties": true
+    },
+    "timelineItem": {
+      "type": "object",
+      "required": ["time", "text"],
+      "properties": {
+        "time": {"type": "string", "minLength": 1},
+        "text": {"type": "string", "minLength": 1},
+        "link": {"$ref": "#/$defs/nullableString"}
+      },
+      "additionalProperties": true
+    },
+    "result": {
+      "type": "object",
+      "required": ["title", "kind", "series"],
+      "properties": {
+        "title": {"type": "string", "minLength": 1},
+        "kind": {"enum": ["bar", "hbar", "line", "stacked", "quota"]},
+        "note": {"$ref": "#/$defs/nullableString"},
+        "unit": {"$ref": "#/$defs/nullableString"},
+        "x": {
+          "type": "array",
+          "description": "Optional x-axis labels for kind=line; one per point.",
+          "items": {"type": "string"}
+        },
+        "series": {"type": "array"}
+      },
+      "additionalProperties": true,
+      "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "bar"}}, "required": ["kind"]},
+          "then": {"properties": {"series": {"$ref": "#/$defs/pointSeries"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "hbar"}}, "required": ["kind"]},
+          "then": {"properties": {"series": {"$ref": "#/$defs/pointSeries"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "line"}}, "required": ["kind"]},
+          "then": {"properties": {"series": {"$ref": "#/$defs/lineSeries"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "stacked"}}, "required": ["kind"]},
+          "then": {"properties": {"series": {"$ref": "#/$defs/stackSeries"}}}
+        },
+        {
+          "if": {"properties": {"kind": {"const": "quota"}}, "required": ["kind"]},
+          "then": {"properties": {"series": {"$ref": "#/$defs/quotaSeries"}}}
+        }
+      ]
+    },
+    "pointSeries": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/pointItem"}
+    },
+    "pointItem": {
+      "type": "object",
+      "required": ["label", "value"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "value": {"$ref": "#/$defs/nullableNumber"},
+        "unit": {"$ref": "#/$defs/nullableString"},
+        "note": {"$ref": "#/$defs/nullableString"}
+      },
+      "additionalProperties": true
+    },
+    "lineSeries": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/lineItem"}
+    },
+    "lineItem": {
+      "type": "object",
+      "required": ["label", "points"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "points": {"type": "array", "items": {"$ref": "#/$defs/nullableNumber"}},
+        "unit": {"$ref": "#/$defs/nullableString"}
+      },
+      "additionalProperties": true
+    },
+    "stackSeries": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/stackItem"}
+    },
+    "stackItem": {
+      "type": "object",
+      "required": ["label", "segments"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "segments": {"type": "array", "items": {"$ref": "#/$defs/segment"}}
+      },
+      "additionalProperties": true
+    },
+    "segment": {
+      "type": "object",
+      "required": ["label", "value"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "value": {"$ref": "#/$defs/nullableNumber"}
+      },
+      "additionalProperties": true
+    },
+    "quotaSeries": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/quotaItem"}
+    },
+    "quotaItem": {
+      "type": "object",
+      "required": ["label", "used", "limit"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "used": {"$ref": "#/$defs/nullableNumber"},
+        "limit": {"$ref": "#/$defs/nullableNumber"},
+        "unit": {"$ref": "#/$defs/nullableString"},
+        "note": {"$ref": "#/$defs/nullableString"}
+      },
+      "additionalProperties": true
+    },
+    "decision": {
+      "type": "object",
+      "required": ["n", "question", "recommended", "options"],
+      "properties": {
+        "n": {"type": ["integer", "string"]},
+        "question": {"type": "string", "minLength": 1},
+        "recommended": {
+          "description": "The recommended option: its letter (A, B, C) or its exact text.",
+          "type": ["string", "integer"]
+        },
+        "options": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      },
+      "additionalProperties": true
+    },
+    "riskItem": {
+      "oneOf": [
+        {"type": "string", "minLength": 1},
+        {
+          "type": "object",
+          "required": ["text"],
+          "properties": {
+            "text": {"type": "string", "minLength": 1},
+            "severity": {"enum": ["low", "medium", "high"]},
+            "note": {"$ref": "#/$defs/nullableString"},
+            "link": {"$ref": "#/$defs/nullableString"}
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "nextItem": {
+      "oneOf": [
+        {"type": "string", "minLength": 1},
+        {
+          "type": "object",
+          "required": ["text"],
+          "properties": {
+            "text": {"type": "string", "minLength": 1},
+            "assignee": {"$ref": "#/$defs/nullableString"},
+            "when": {"$ref": "#/$defs/nullableString"},
+            "link": {"$ref": "#/$defs/nullableString"}
+          },
+          "additionalProperties": true
+        }
+      ]
+    },
+    "link": {
+      "type": "object",
+      "required": ["label", "link"],
+      "properties": {
+        "label": {"type": "string", "minLength": 1},
+        "link": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": true
+    }
+  }
+}

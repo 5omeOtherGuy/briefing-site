@@ -1,0 +1,409 @@
+/* Morning briefing — artifact stylesheet (one self-contained page).
+   No web fonts, no external assets and no scripts.  The host wraps this
+   fragment in its own head/body, so only body, the page wrapper and the
+   content are styled here.
+
+   Theme contract:
+   * the complete light palette is defined once, on bare :root;
+   * dark mode redefines exactly those tokens, in the two blocks below;
+   * every chart colour comes from a token, never a one-theme hex. */
+
+:root {
+  color-scheme: light dark;
+
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+          Arial, "Noto Sans", sans-serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* surfaces and text */
+  --bg: #f6f7f9;
+  --panel: #ffffff;
+  --panel-alt: #eef1f5;
+  --ink: #14181f;
+  --ink-soft: #4b5565;
+  --ink-faint: #6b7483;
+  --line: #d8dde5;
+  --accent: #1c5fd0;
+
+  /* semantic: good / warn / critical */
+  --good: #167c3d;
+  --warn: #9a5b14;
+  --critical: #b3261e;
+  --on-critical: #ffffff;
+
+  /* chart series palette (quota bars use the semantic tokens, not these) */
+  --c0: #2f6fd0;
+  --c1: #2aa198;
+  --c2: #c9772c;
+  --c3: #8a5cd6;
+  --c4: #cc3b45;
+  --c5: #5b7089;
+
+  --radius: 10px;
+}
+
+/* Dark mode, one: the reader's OS preference (unless they forced light). */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #10141a;
+    --panel: #171c24;
+    --panel-alt: #1e242d;
+    --ink: #eef1f5;
+    --ink-soft: #c2cad6;
+    --ink-faint: #94a0b0;
+    --line: #2c3540;
+    --accent: #6ea8ff;
+    --good: #4ec97e;
+    --warn: #e0a24c;
+    --critical: #ff6b5e;
+    --on-critical: #1a1013;
+    --c0: #6ea8ff;
+    --c1: #4fd1c5;
+    --c2: #f0a95c;
+    --c3: #b79dff;
+    --c4: #ff7b72;
+    --c5: #9fb0c3;
+    color-scheme: dark;
+  }
+}
+
+/* Dark mode, two: an explicit theme switch on the host element. */
+:root[data-theme="dark"] {
+  --bg: #10141a;
+  --panel: #171c24;
+  --panel-alt: #1e242d;
+  --ink: #eef1f5;
+  --ink-soft: #c2cad6;
+  --ink-faint: #94a0b0;
+  --line: #2c3540;
+  --accent: #6ea8ff;
+  --good: #4ec97e;
+  --warn: #e0a24c;
+  --critical: #ff6b5e;
+  --on-critical: #1a1013;
+  --c0: #6ea8ff;
+  --c1: #4fd1c5;
+  --c2: #f0a95c;
+  --c3: #b79dff;
+  --c4: #ff7b72;
+  --c5: #9fb0c3;
+  color-scheme: dark;
+}
+
+/* An explicit light switch: the bare :root palette already is the light one,
+   so this only tells the browser to keep its chrome light as well. */
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+
+/* One outer wrapper: inline padding for the gutters, block padding for the
+   vertical rhythm.  Never a `padding` shorthand that zeroes the sides. */
+.page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-inline: 16px;
+  padding-block: 20px 44px;
+}
+
+a { color: var(--accent); }
+a:hover { text-decoration: none; }
+
+/* overview --------------------------------------------------------------- */
+
+.overview { padding-bottom: 20px; }
+.page-title {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 0 0 4px;
+}
+.stamp {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+.lede { color: var(--ink-soft); margin: 10px 0 0; max-width: 72ch; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin: 18px 0 0;
+}
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  margin: 0;
+  min-width: 0;
+}
+.project-card h2 { margin: 0 0 6px; font-size: 1.1rem; }
+.project-card h2 a { text-decoration: none; }
+.headline { color: var(--ink-soft); margin: 0 0 4px; max-width: 72ch; }
+.open-decisions {
+  margin: 12px 0 0;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+}
+.open-decisions.none { color: var(--ink-faint); }
+
+.mini-tiles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px 16px;
+}
+.mini-tiles li { display: flex; flex-direction: column; min-width: 0; }
+.m-label { font-size: 0.75rem; color: var(--ink-faint); }
+.m-value { font-variant-numeric: tabular-nums; font-weight: 600; overflow-wrap: anywhere; }
+.m-value.unknown { color: var(--ink-faint); font-weight: 500; }
+
+/* long words (URLs, hashes, ids) must never widen the page */
+.headline, .lede, .decision h3, .risks li, .next24h li { overflow-wrap: anywhere; }
+
+/* projects --------------------------------------------------------------- */
+
+.project {
+  border-top: 1px solid var(--line);
+  margin-top: 24px;
+  padding-top: 22px;
+}
+.project-head { margin-bottom: 6px; }
+.section { margin: 26px 0; }
+.section h2 {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-faint);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 6px;
+  margin: 0 0 12px;
+}
+.empty { color: var(--ink-faint); font-style: italic; margin: 0; }
+.back-top { margin: 22px 0 0; font-size: 0.8rem; }
+.back-top a { color: var(--ink-faint); text-decoration: none; }
+.back-top a:hover { color: var(--accent); text-decoration: underline; }
+
+/* tiles ------------------------------------------------------------------ */
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+}
+.tile {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  min-width: 0;
+}
+.tile-label {
+  margin: 0;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-faint);
+}
+.tile-value {
+  margin: 4px 0 0;
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.tile-value.unknown { color: var(--ink-faint); }
+.tile-unit { font-size: 0.85rem; font-weight: 500; color: var(--ink-faint); margin-left: 4px; }
+.tile-unit.tight { margin-left: 0; }
+.tile-delta { margin: 2px 0 0; font-size: 0.82rem; font-variant-numeric: tabular-nums; }
+.tile-delta.up { color: var(--good); }
+.tile-delta.down { color: var(--critical); }
+.tile-delta.flat { color: var(--ink-faint); }
+.tile-note { margin: 4px 0 0; font-size: 0.78rem; color: var(--ink-faint); }
+
+/* timeline --------------------------------------------------------------- */
+
+.timeline { list-style: none; margin: 0; padding: 0; }
+.timeline li {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+}
+.timeline li:last-child { border-bottom: 0; }
+.t-time { color: var(--ink-faint); font-size: 0.85rem; font-variant-numeric: tabular-nums; }
+.t-text { min-width: 0; overflow-wrap: anywhere; }
+
+/* charts ----------------------------------------------------------------- */
+
+.chart-scroll { overflow-x: auto; }
+.chart-card { padding: 12px 16px 16px; }
+.chart-card figcaption { margin-bottom: 4px; }
+.chart-card h3 { margin: 0; font-size: 1rem; }
+.chart-card .kind {
+  margin: 2px 0 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+.chart { display: block; width: 100%; height: auto; }
+.chart-note { margin: 6px 0 0; font-size: 0.82rem; color: var(--ink-faint); }
+
+/* every drawn shape has an explicit fill; lines only ever stroke */
+.chart rect, .chart circle, .chart text { fill: var(--ink); }
+.chart line, .chart polyline { fill: none; }
+.chart .grid { stroke: var(--line); stroke-width: 1; }
+.chart .axis { stroke: var(--ink-faint); stroke-width: 1; }
+.chart .zero { stroke: var(--ink-faint); stroke-width: 2; stroke-dasharray: 3 3; }
+.chart .track { fill: var(--panel-alt); }
+.chart .tick { fill: var(--ink-faint); font-size: 11px; font-family: var(--font); }
+.chart .cat { fill: var(--ink-soft); font-size: 11px; font-family: var(--font); }
+.chart .value { fill: var(--ink); font-size: 11px; font-family: var(--font); }
+.chart .legend { fill: var(--ink-soft); font-size: 11px; font-family: var(--font); }
+.chart .unknown { fill: var(--ink-faint); font-size: 12px; font-family: var(--font); font-style: italic; }
+.chart .line { fill: none; stroke-width: 2; }
+.chart .dot { fill: var(--ink); stroke: var(--panel); stroke-width: 1; }
+.chart .badge-bg { fill: var(--critical); }
+.chart .badge { fill: var(--on-critical); font-size: 10px; font-weight: 700; font-family: var(--font); }
+
+.chart .s0 { fill: var(--c0); }
+.chart .s1 { fill: var(--c1); }
+.chart .s2 { fill: var(--c2); }
+.chart .s3 { fill: var(--c3); }
+.chart .s4 { fill: var(--c4); }
+.chart .s5 { fill: var(--c5); }
+.chart .s0.line { stroke: var(--c0); }
+.chart .s1.line { stroke: var(--c1); }
+.chart .s2.line { stroke: var(--c2); }
+.chart .s3.line { stroke: var(--c3); }
+.chart .s4.line { stroke: var(--c4); }
+.chart .s5.line { stroke: var(--c5); }
+.chart .s0.dot { fill: var(--c0); }
+.chart .s1.dot { fill: var(--c1); }
+.chart .s2.dot { fill: var(--c2); }
+.chart .s3.dot { fill: var(--c3); }
+.chart .s4.dot { fill: var(--c4); }
+.chart .s5.dot { fill: var(--c5); }
+
+/* the quota hit-list reads semantically, not as a series palette */
+.chart.quota .s2.bar { fill: var(--warn); }
+.chart.quota .s4.bar { fill: var(--critical); }
+
+/* decisions -------------------------------------------------------------- */
+
+.decision .d-num {
+  margin: 0;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--ink-faint);
+}
+.decision h3 { margin: 4px 0 12px; font-size: 1.02rem; }
+.options { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.options li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel-alt);
+}
+.options li.rec {
+  border-color: var(--accent);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.opt-letter { font-weight: 700; color: var(--ink-faint); }
+.options li.rec .opt-letter { color: var(--accent); }
+.rec-badge {
+  margin-left: auto;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+/* lists ------------------------------------------------------------------ */
+
+.risks, .next24h, .evidence { list-style: none; margin: 0; padding: 0; }
+.risks li, .next24h li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.risks li:last-child, .next24h li:last-child { border-bottom: 0; }
+.evidence li { padding: 4px 0; overflow-wrap: anywhere; }
+.note { color: var(--ink-faint); font-size: 0.85rem; }
+.assignee {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--ink-faint);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+.sev {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 1px 8px;
+  border: 1px solid currentColor;
+}
+.sev-low { color: var(--good); }
+.sev-medium { color: var(--warn); }
+.sev-high { color: var(--critical); }
+
+/* markdown --------------------------------------------------------------- */
+
+.markdown h1, .markdown h2, .markdown h3 { font-size: 1.05rem; margin: 16px 0 8px; }
+.markdown p { margin: 8px 0; }
+.markdown ul { margin: 8px 0; padding-left: 20px; }
+
+/* footer ----------------------------------------------------------------- */
+
+.page-footer {
+  border-top: 1px solid var(--line);
+  margin-top: 36px;
+  padding-top: 12px;
+  color: var(--ink-faint);
+  font-size: 0.8rem;
+}
+.page-footer p { margin: 6px 0; }
+.page-footer code { font-family: var(--mono); }
+.muted { color: var(--ink-faint); }
+
+/* phone-width safety ----------------------------------------------------- */
+
+@media (max-width: 560px) {
+  .page { padding-inline: 16px; }
+  .page-title { font-size: 1.35rem; }
+  .tiles { grid-template-columns: repeat(auto-fit, minmax(132px, 1fr)); }
+  .timeline li { grid-template-columns: 52px 1fr; gap: 8px; }
+  .options li { flex-wrap: wrap; }
+  .rec-badge { margin-left: 0; }
+}

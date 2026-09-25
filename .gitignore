@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+.DS_Store
+
+# artifact output written by `build.py --artifact out/briefing.html`
+out/

@@ -1,0 +1,95 @@
+{
+  "project": "API service (EXAMPLE)",
+  "as_of": "2026-09-25T06:30:00Z",
+  "headline": "EXAMPLE DATA — request latency p95 fell to 180 ms while the ingest backlog held flat; one quota route is close to its limit.",
+  "tiles": [
+    {"label": "Requests served", "value": 1284, "unit": "requests", "delta": 96, "note": "last 24h, thousands"},
+    {"label": "Latency p95", "value": 180, "unit": "ms", "delta": -22, "note": "target 250 ms"},
+    {"label": "Eval pass rate", "value": 94, "unit": "%", "delta": "+3 vs yesterday", "note": "golden set, n=50"},
+    {"label": "Ingest backlog", "value": 42, "unit": "items", "delta": 0, "note": "unchanged for 6h"},
+    {"label": "Write budget left", "value": null, "unit": "GB", "delta": null, "note": "meter not reporting"},
+    {"label": "On-call", "value": "team-b", "unit": null, "delta": null, "note": "EXAMPLE"}
+  ],
+  "timeline": [
+    {"time": "00:10", "text": "Nightly reindex finished; latency p95 improved from 202 ms to 180 ms."},
+    {"time": "02:40", "text": "Ingest retry storm on shard-3 self-healed after a backoff change.", "link": "https://example.com/api/runs/7741"},
+    {"time": "04:05", "text": "Golden-set eval re-run: 94% pass (was 91%)."},
+    {"time": "05:55", "text": "Warm cache rebuild scheduled for 07:30 (no downtime expected)."}
+  ],
+  "results": [
+    {
+      "title": "Requests per day",
+      "kind": "bar",
+      "unit": "requests",
+      "note": "EXAMPLE — last 7 days, thousands",
+      "series": [
+        {"label": "09-19", "value": 980},
+        {"label": "09-20", "value": 1042},
+        {"label": "09-21", "value": 1125},
+        {"label": "09-22", "value": 1188},
+        {"label": "09-23", "value": 1210},
+        {"label": "09-24", "value": 1284}
+      ]
+    },
+    {
+      "title": "Latency p95",
+      "kind": "line",
+      "unit": "ms",
+      "note": "EXAMPLE — lower is better; target 250 ms",
+      "x": ["09-19", "09-20", "09-21", "09-22", "09-23", "09-24"],
+      "series": [
+        {"label": "p95", "points": [231, 226, 214, 208, 202, 180]},
+        {"label": "p50", "points": [88, 84, 79, 77, 74, 61]}
+      ]
+    },
+    {
+      "title": "Route quota (hit-list)",
+      "kind": "quota",
+      "unit": "calls/day",
+      "note": "EXAMPLE — routes at or above 80% of their daily limit are flagged",
+      "series": [
+        {"label": "/v1/search", "used": 820000, "limit": 1000000},
+        {"label": "/v1/ingest", "used": 480000, "limit": 1000000},
+        {"label": "/v1/reindex", "used": 100000, "limit": 100000},
+        {"label": "/v1/export", "used": null, "limit": 500000}
+      ]
+    }
+  ],
+  "decisions": [
+    {
+      "n": 1,
+      "question": "Raise the /v1/reindex daily limit?",
+      "recommended": "B",
+      "options": [
+        "A) Keep 100k and let reindex queue overnight.",
+        "B) Raise to 150k for one week while the backlog drains.",
+        "C) Drop reindex entirely until the backlog clears."
+      ]
+    },
+    {
+      "n": 2,
+      "question": "Promote the eval gate to block merges?",
+      "recommended": "Warn only",
+      "options": [
+        "Block merges below 90% pass rate.",
+        "Warn only for two weeks, then decide.",
+        "No gate; keep it manual."
+      ]
+    }
+  ],
+  "risks": [
+    {"text": "Write-budget meter is not reporting, so spend is invisible.", "severity": "medium", "note": "EXAMPLE"},
+    {"text": "Single on-call for the service this weekend.", "severity": "low"},
+    "EXAMPLE risk: shard-3 has no warm standby."
+  ],
+  "next24h": [
+    {"text": "Warm cache rebuild at 07:30.", "assignee": "team-b", "when": "07:30"},
+    "Golden-set eval re-run at 12:00.",
+    {"text": "Drain the ingest backlog below 20 items.", "assignee": "team-a", "when": "by 18:00"}
+  ],
+  "evidence": [
+    {"label": "Latency dashboard (EXAMPLE)", "link": "https://example.com/api/dash/latency"},
+    {"label": "Nightly reindex run log (EXAMPLE)", "link": "https://example.com/api/runs/7741"},
+    {"label": "Quota report (EXAMPLE)", "link": "../example-api.html"}
+  ]
+}

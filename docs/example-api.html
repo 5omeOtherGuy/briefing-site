@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" data-kind="project">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="description" content="Morning briefing">
+<title>API service (EXAMPLE) — Morning Briefing</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+  <div class="wrap header-inner">
+    <p class="brand"><a href="index.html">Morning Briefing</a></p>
+    <p class="as-of">As of <time datetime="2026-09-25T06:30:00Z">2026-09-25 06:30 UTC</time></p>
+  </div>
+</header>
+<main id="main" class="wrap">
+<header class="project-head">
+  <h1 class="page-title">API service (EXAMPLE)</h1>
+  <p class="headline">EXAMPLE DATA — request latency p95 fell to 180 ms while the ingest backlog held flat; one quota route is close to its limit.</p>
+</header>
+<section id="details" class="section"><h2>Details</h2><div class="markdown"><h1>Example notes (EXAMPLE)</h1>
+<p>This file demonstrates the <strong>minimal markdown subset</strong> that `build.py` renders for `content/&lt;project&gt;.md`: headings, bullet lists, <a href="index.html">links</a> and <strong>bold</strong> text. Everything else is shown literally.</p>
+<h2>What changed</h2>
+<ul><li>The markdown renderer escapes HTML first, so it is safe to paste text.</li><li>Links must use a relative path, a `#fragment`, or an absolute `https`/`mailto` address. Anything else renders as plain text.</li><li>This section is optional: without `content/&lt;project&gt;.md` the page simply omits the <strong>Details</strong> block.</li></ul>
+<h2>Reading order</h2>
+<ul><li><strong>Key numbers</strong> first: the six tiles at the top.</li><li><strong>Results</strong> next: the same five chart kinds for every project.</li><li><strong>Decisions needed</strong> last: the recommended option is highlighted.</li></ul></div></section>
+<section id="tiles" class="section">
+  <h2>Key numbers</h2>
+  <div class="tiles"><div class="tile"><p class="tile-label">Requests served</p><p class="tile-value">1284<span class="tile-unit">requests</span></p><p class="tile-delta up">+96 requests</p><p class="tile-note">last 24h, thousands</p></div><div class="tile"><p class="tile-label">Latency p95</p><p class="tile-value">180<span class="tile-unit">ms</span></p><p class="tile-delta down">-22 ms</p><p class="tile-note">target 250 ms</p></div><div class="tile"><p class="tile-label">Eval pass rate</p><p class="tile-value">94<span class="tile-unit tight">%</span></p><p class="tile-delta up">+3 vs yesterday</p><p class="tile-note">golden set, n=50</p></div><div class="tile"><p class="tile-label">Ingest backlog</p><p class="tile-value">42<span class="tile-unit">items</span></p><p class="tile-delta flat">0 items</p><p class="tile-note">unchanged for 6h</p></div><div class="tile"><p class="tile-label">Write budget left</p><p class="tile-value unknown">—</p><p class="tile-note">meter not reporting</p></div><div class="tile"><p class="tile-label">On-call</p><p class="tile-value">team-b</p><p class="tile-note">EXAMPLE</p></div></div>
+</section>
+<section id="timeline" class="section">
+  <h2>What happened</h2>
+  <ol class="timeline"><li><span class="t-time">00:10</span><span class="t-text">Nightly reindex finished; latency p95 improved from 202 ms to 180 ms.</span></li><li><span class="t-time">02:40</span><span class="t-text"><a href="https://example.com/api/runs/7741">Ingest retry storm on shard-3 self-healed after a backoff change.</a></span></li><li><span class="t-time">04:05</span><span class="t-text">Golden-set eval re-run: 94% pass (was 91%).</span></li><li><span class="t-time">05:55</span><span class="t-text">Warm cache rebuild scheduled for 07:30 (no downtime expected).</span></li></ol>
+</section>
+<section id="results" class="section">
+  <h2>Results</h2>
+  <figure class="card chart-card"><figcaption><h3>Requests per day</h3><p class="kind">bar</p></figcaption><svg class="chart" viewBox="0 0 640 260" width="100%" height="260" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Requests per day"><line class="grid" x1="48" y1="204" x2="624" y2="204"/><text class="tick" x="40" y="207" text-anchor="end">0</text><line class="grid" x1="48" y1="145.33" x2="624" y2="145.33"/><text class="tick" x="40" y="148.33" text-anchor="end">500</text><line class="grid" x1="48" y1="86.67" x2="624" y2="86.67"/><text class="tick" x="40" y="89.67" text-anchor="end">1000</text><line class="grid" x1="48" y1="28" x2="624" y2="28"/><text class="tick" x="40" y="31" text-anchor="end">1500</text><line class="axis" x1="48" y1="204" x2="624" y2="204"/><rect class="s0 bar" x="66.24" y="89.01" width="59.52" height="114.99" rx="2"/><text class="value" x="96" y="83.01" text-anchor="middle">980 requests</text><text class="cat" x="96" y="224" text-anchor="middle">09-19</text><rect class="s0 bar" x="162.24" y="81.74" width="59.52" height="122.26" rx="2"/><text class="value" x="192" y="75.74" text-anchor="middle">1042 requests</text><text class="cat" x="192" y="224" text-anchor="middle">09-20</text><rect class="s0 bar" x="258.24" y="72" width="59.52" height="132" rx="2"/><text class="value" x="288" y="66" text-anchor="middle">1125 requests</text><text class="cat" x="288" y="224" text-anchor="middle">09-21</text><rect class="s0 bar" x="354.24" y="64.61" width="59.52" height="139.39" rx="2"/><text class="value" x="384" y="58.61" text-anchor="middle">1188 requests</text><text class="cat" x="384" y="224" text-anchor="middle">09-22</text><rect class="s0 bar" x="450.24" y="62.03" width="59.52" height="141.97" rx="2"/><text class="value" x="480" y="56.03" text-anchor="middle">1210 requests</text><text class="cat" x="480" y="224" text-anchor="middle">09-23</text><rect class="s0 bar" x="546.24" y="53.34" width="59.52" height="150.66" rx="2"/><text class="value" x="576" y="47.34" text-anchor="middle">1284 requests</text><text class="cat" x="576" y="224" text-anchor="middle">09-24</text></svg><p class="chart-note">EXAMPLE — last 7 days, thousands</p></figure><figure class="card chart-card"><figcaption><h3>Latency p95</h3><p class="kind">line</p></figcaption><svg class="chart" viewBox="0 0 640 260" width="100%" height="260" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Latency p95"><line class="grid" x1="48" y1="208" x2="544" y2="208"/><text class="tick" x="40" y="211" text-anchor="end">0</text><line class="grid" x1="48" y1="148" x2="544" y2="148"/><text class="tick" x="40" y="151" text-anchor="end">100</text><line class="grid" x1="48" y1="88" x2="544" y2="88"/><text class="tick" x="40" y="91" text-anchor="end">200</text><line class="grid" x1="48" y1="28" x2="544" y2="28"/><text class="tick" x="40" y="31" text-anchor="end">300</text><line class="axis" x1="48" y1="208" x2="544" y2="208"/><polyline class="s0 line" points="48,69.4 147.2,72.4 246.4,79.6 345.6,83.2 444.8,86.8 544,100"/><circle class="s0 dot" cx="48" cy="69.4" r="2.5"/><circle class="s0 dot" cx="147.2" cy="72.4" r="2.5"/><circle class="s0 dot" cx="246.4" cy="79.6" r="2.5"/><circle class="s0 dot" cx="345.6" cy="83.2" r="2.5"/><circle class="s0 dot" cx="444.8" cy="86.8" r="2.5"/><circle class="s0 dot" cx="544" cy="100" r="2.5"/><rect class="s0 bar" x="552" y="34" width="12" height="12" rx="2"/><text class="legend" x="570" y="45">p95 (ms)</text><polyline class="s1 line" points="48,155.2 147.2,157.6 246.4,160.6 345.6,161.8 444.8,163.6 544,171.4"/><circle class="s1 dot" cx="48" cy="155.2" r="2.5"/><circle class="s1 dot" cx="147.2" cy="157.6" r="2.5"/><circle class="s1 dot" cx="246.4" cy="160.6" r="2.5"/><circle class="s1 dot" cx="345.6" cy="161.8" r="2.5"/><circle class="s1 dot" cx="444.8" cy="163.6" r="2.5"/><circle class="s1 dot" cx="544" cy="171.4" r="2.5"/><rect class="s1 bar" x="552" y="52" width="12" height="12" rx="2"/><text class="legend" x="570" y="63">p50 (ms)</text><text class="cat" x="48" y="228" text-anchor="middle">09-19</text><text class="cat" x="147.2" y="228" text-anchor="middle">09-20</text><text class="cat" x="246.4" y="228" text-anchor="middle">09-21</text><text class="cat" x="345.6" y="228" text-anchor="middle">09-22</text><text class="cat" x="444.8" y="228" text-anchor="middle">09-23</text><text class="cat" x="544" y="228" text-anchor="middle">09-24</text></svg><p class="chart-note">EXAMPLE — lower is better; target 250 ms</p></figure><figure class="card chart-card"><figcaption><h3>Route quota (hit-list)</h3><p class="kind">quota</p></figcaption><svg class="chart quota" viewBox="0 0 640 184" width="100%" height="184" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Route quota (hit-list)"><text class="cat" x="140" y="37" text-anchor="end">/v1/search</text><rect class="track" x="150" y="27" width="340" height="14" rx="3"/><rect class="s2 bar" x="150" y="27" width="278.8" height="14" rx="3"/><text class="value" x="498" y="37">82% (820000 / 1000000)</text><text class="legend" x="150" y="51">calls/day</text><text class="cat" x="140" y="71" text-anchor="end">/v1/ingest</text><rect class="track" x="150" y="61" width="340" height="14" rx="3"/><rect class="s0 bar" x="150" y="61" width="163.2" height="14" rx="3"/><text class="value" x="498" y="71">48% (480000 / 1000000)</text><text class="legend" x="150" y="85">calls/day</text><text class="cat" x="140" y="105" text-anchor="end">/v1/reindex</text><rect class="track" x="150" y="95" width="340" height="14" rx="3"/><rect class="s4 bar" x="150" y="95" width="340" height="14" rx="3"/><text class="value" x="498" y="105">100% (100000 / 100000)</text><rect class="badge-bg" x="576" y="93" width="58" height="16" rx="8"/><text class="badge" x="605" y="105" text-anchor="middle">HIT LIMIT</text><text class="legend" x="150" y="119">calls/day</text><text class="cat" x="140" y="139" text-anchor="end">/v1/export</text><rect class="track" x="150" y="129" width="340" height="14" rx="3"/><text class="unknown" x="158" y="139">—</text><text class="legend" x="150" y="153">calls/day</text></svg><p class="chart-note">EXAMPLE — routes at or above 80% of their daily limit are flagged</p></figure>
+</section>
+<section id="decisions" class="section">
+  <h2>Decisions needed</h2>
+  <article class="card decision"><p class="d-num">Decision 1</p><h3>Raise the /v1/reindex daily limit?</h3><ul class="options"><li class=""><span class="opt-letter">A</span>A) Keep 100k and let reindex queue overnight.</li><li class="rec"><span class="opt-letter">B</span>B) Raise to 150k for one week while the backlog drains.<span class="rec-badge">recommended</span></li><li class=""><span class="opt-letter">C</span>C) Drop reindex entirely until the backlog clears.</li></ul></article><article class="card decision"><p class="d-num">Decision 2</p><h3>Promote the eval gate to block merges?</h3><ul class="options"><li class=""><span class="opt-letter">A</span>Block merges below 90% pass rate.</li><li class="rec"><span class="opt-letter">B</span>Warn only for two weeks, then decide.<span class="rec-badge">recommended</span></li><li class=""><span class="opt-letter">C</span>No gate; keep it manual.</li></ul></article>
+</section>
+<section id="risks" class="section">
+  <h2>Risks</h2>
+  <ul class="risks"><li>Write-budget meter is not reporting, so spend is invisible. <span class="note">EXAMPLE</span><span class="sev sev-medium">medium</span></li><li>Single on-call for the service this weekend.<span class="sev sev-low">low</span></li><li>EXAMPLE risk: shard-3 has no warm standby.</li></ul>
+</section>
+<section id="next24h" class="section">
+  <h2>Next 24 hours</h2>
+  <ul class="next24h"><li>Warm cache rebuild at 07:30.<span class="assignee">team-b</span></li><li>Golden-set eval re-run at 12:00.</li><li>Drain the ingest backlog below 20 items.<span class="assignee">team-a</span></li></ul>
+</section>
+<section id="evidence" class="section">
+  <h2>Evidence</h2>
+  <ul class="evidence"><li><a href="https://example.com/api/dash/latency">Latency dashboard (EXAMPLE)</a></li><li><a href="https://example.com/api/runs/7741">Nightly reindex run log (EXAMPLE)</a></li><li><a href="../example-api.html">Quota report (EXAMPLE)</a></li></ul>
+</section>
+
+</main>
+<footer class="site-footer">
+  <div class="wrap">
+    <p>Built <time datetime="2026-09-25T06:30:00Z">2026-09-25 06:30 UTC</time> · source <code>unknown</code></p>
+    <p class="muted">Generated by build.py from data/example-api.json · no secrets, numbers and links only.</p>
+  </div>
+</footer>
+</body>
+</html>

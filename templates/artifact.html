@@ -1,0 +1,19 @@
+<title>{{title}}</title>
+<style>
+{{style}}
+</style>
+<div class="page" id="top">
+<section class="overview">
+<h1 class="page-title">Morning Briefing</h1>
+<p class="stamp">As of <time datetime="{{as_of_iso}}">{{as_of_human}}</time></p>
+<p class="lede">{{lede}}</p>
+<div class="cards" aria-label="Projects">
+{{project_cards}}
+</div>
+</section>
+{{projects}}
+<footer class="page-footer">
+<p>Built <time datetime="{{build_iso}}">{{build_human}}</time> · source <code>{{commit}}</code></p>
+<p class="muted">{{footer_note}}</p>
+</footer>
+</div>
