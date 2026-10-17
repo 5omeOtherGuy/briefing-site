@@ -32,9 +32,8 @@ tools/install-git-hooks.sh    installs that hook
 
 Nothing to install beyond Python:
 
-- Python 3.8 or newer (`python3 --version`). No pip packages, no virtualenv
-  needed. Development and CI use the interpreter the GitHub Actions runner
-  provides (3.12 at the time of writing).
+- Python 3.10 or newer (`python3 --version`). No pip packages, no virtualenv
+  needed. CI runs the test suite on Python 3.10 and 3.14.
 
 ```sh
 git clone <this repository> briefing-site
