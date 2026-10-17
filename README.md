@@ -1,5 +1,13 @@
 # briefing-site
 
+Static morning-briefing site generator: one JSON per project in, HTML with inline SVG charts out (stdlib only).
+
+Status: prototype. Exploring; the data contract, CLI and output may change
+without notice, and nothing is released or versioned.
+
+[![gate](https://github.com/5omeOtherGuy/briefing-site/actions/workflows/gate.yml/badge.svg?branch=main)](https://github.com/5omeOtherGuy/briefing-site/actions/workflows/gate.yml)
+[![licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
+
 A static site generator for short, recurring status briefings. One JSON file per
 project describes its current state — key numbers, what happened, decisions to
 make, risks, the next 24 hours, links. `build.py` turns those files into a
@@ -10,23 +18,7 @@ self-contained HTML file that can be pasted into a chat tool or wiki page.
 JavaScript, no network access and no third-party package; a build is
 deterministic (the same inputs and environment produce the same bytes).
 
-## Layout
-
-```
-build.py                      generator (stdlib only)
-data/<project>.json           one file per project — the file most people edit
-data/example-*.json           worked examples, labelled EXAMPLE
-content/<project>.md          optional narrative (minimal markdown subset)
-schema/briefing.schema.json   the data contract, validated on every build
-templates/                    base.html, index.html, project.html, style.css,
-                              artifact.html, artifact.css
-tests/                        unittest suite
-docs/                         generated site (committed; the tests rebuild it
-                              and compare it byte for byte)
-tools/secret-scan.sh          credential scanner
-tools/hooks/pre-push          git hook that runs the scanner on outgoing commits
-tools/install-git-hooks.sh    installs that hook
-```
+![The example project page built from data/example-api.json](.github/readme/example-api.png)
 
 ## Install
 
@@ -36,14 +28,14 @@ Nothing to install beyond Python:
   needed. CI runs the test suite on Python 3.10 and 3.14.
 
 ```sh
-git clone <this repository> briefing-site
+git clone https://github.com/5omeOtherGuy/briefing-site.git
 cd briefing-site
 python3 build.py --check             # validate every data/*.json
 python3 build.py                     # write the site into docs/
 python3 -m unittest discover -s tests   # run the test suite
 ```
 
-## Worked example
+## Usage
 
 The two files in `data/` are examples; the site built from them is committed in
 `docs/`.
@@ -166,15 +158,20 @@ errors with `file:line:column`.
 - The example files contain invented data. No real, private or production data
   is in this repository.
 
-## Tests
+## Development
+
+Run the gate before every push; CI runs the same command (job `gate`, on
+Python 3.10 and 3.14). It prints nothing when everything passes; set `PYTHON`
+to run it with another interpreter.
 
 ```sh
-python3 -m unittest discover -s tests
+scripts/gate                                         # data check, tests, secret scan
+python3 -m unittest discover -s tests -p test_charts.py -v   # one test module
 ```
 
-123 tests, standard library only, no network. They cover the schema validator
-and its error positions, every chart kind, the markdown subset, escaping of
-hostile input, the fixed section order, determinism (two builds are byte
+The tests use the standard library only and no network. They cover the schema
+validator and its error positions, every chart kind, the markdown subset,
+escaping of hostile input, the fixed section order, determinism (two builds are byte
 comparison-identical), the committed `docs/` versus a fresh build, and the
 repository's own secret scanner. Run them from the repository root.
 
@@ -184,7 +181,26 @@ your configuration. If `bash` or `grep` is missing they are **skipped** with a
 message naming the missing program, and if `git` is missing the hook test is
 skipped — the other tests still run.
 
-## Secret scan
+### Repository layout
+
+```
+build.py                      generator (stdlib only)
+data/<project>.json           one file per project — the file most people edit
+data/example-*.json           worked examples, labelled EXAMPLE
+content/<project>.md          optional narrative (minimal markdown subset)
+schema/briefing.schema.json   the data contract, validated on every build
+templates/                    base.html, index.html, project.html, style.css,
+                              artifact.html, artifact.css
+tests/                        unittest suite
+docs/                         generated site (committed; the tests rebuild it
+                              and compare it byte for byte)
+tools/secret-scan.sh          credential scanner
+tools/hooks/pre-push          git hook that runs the scanner on outgoing commits
+tools/install-git-hooks.sh    installs that hook
+scripts/gate                  the gate: data check, tests, secret scan
+```
+
+### Secret scan
 
 ```sh
 tools/secret-scan.sh          # scan the tree; exit 0 clean, 1 hit, 2 scanner error
@@ -194,6 +210,6 @@ tools/install-git-hooks.sh    # install the pre-push hook (runs the scan on outg
 The hook fails closed: a missing scanner or any scanner error refuses the push.
 Git does not clone hooks, so run `tools/install-git-hooks.sh` once per clone.
 
-## License
+## Licence
 
 MIT — see `LICENSE`.
