@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Orb setup for briefing-site. The generator and its tests use the Python
+# standard library only, so there is nothing to install beyond python3 >= 3.10.
+# Idempotent; prints which credentials are present, never their values.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+
+if ! python3 -c 'import sys; sys.exit(sys.version_info < (3, 10))' 2>/dev/null; then
+  echo "setup: python3 >= 3.10 is required, found: $(python3 --version 2>&1 || echo none)" >&2
+  exit 1
+fi
+echo "setup: $(python3 --version)"
+for tool in bash grep git; do
+  command -v "$tool" >/dev/null || echo "setup: $tool missing; the tests that need it will be skipped"
+done
+if command -v gh >/dev/null && gh auth status >/dev/null 2>&1; then
+  echo "setup: gh is authenticated"
+else
+  echo "setup: gh is not authenticated (only needed for GitHub work)"
+fi
