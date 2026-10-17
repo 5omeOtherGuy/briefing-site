@@ -4,3 +4,16 @@ __pycache__/
 
 # artifact output written by `build.py --artifact out/briefing.html`
 out/
+
+# local environment files (never commit credentials)
+.env*
+!.env.example
+
+# local agent scratch
+.amp/in/
+
+# editors
+.idea/
+.vscode/
+*.swp
+*~
