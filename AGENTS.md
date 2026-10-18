@@ -2,11 +2,12 @@
 
 ## Profile
 - Purpose: Static morning-briefing site generator: one JSON per project in, HTML with inline SVG charts out (stdlib only).
-- Stage: prototype (repository standard 2026-10-17)
+- Stage: prototype (repository standard 2026-10-18)
 - Gate: `scripts/gate` (CI job `gate`)
 - Landing: direct to main after a green gate; agents land: yes (default)
 - Release: none; agents release: no (default)
 - Outside issues and PRs: agents triage (default); outside PRs merge: owner approves (default)
+- Sensitive paths: `AGENTS.md`, `.agents/`, `.github/workflows/`, `scripts/gate`, `tools/` (secret scan and its pre-push hook), `schema/briefing.schema.json` and the CLI and schema validator in `build.py` (public interfaces)
 
 No deliberate deviations from the repository standard.
 
@@ -27,8 +28,9 @@ No deliberate deviations from the repository standard.
 
 1. Make one small commit per concern, with a Conventional Commits subject.
 2. Run `scripts/gate`; it prints nothing when everything passes.
-3. Push to `main`. Push at the end of every session.
-4. Try risky ideas on a `spike/<slug>` branch; merge it when done, or tag it `archive/<slug>`, push the tag and delete the branch.
+3. A change to a sensitive path (see the profile) gets an independent review of its diff (another agent or the owner) before it is pushed; record the verdict in the commit body.
+4. Push to `main`. Push at the end of every session.
+5. Try risky ideas on a `spike/<slug>` branch; merge it when done, or tag it `archive/<slug>`, push the tag and delete the branch.
 
 ## Rules for this repository
 
