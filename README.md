@@ -160,8 +160,9 @@ errors with `file:line:column`.
 
 ## Development
 
-Run the gate before every push; CI runs the same command (job `gate`, on
-Python 3.10 and 3.14). It prints nothing when everything passes; set `PYTHON`
+Run the gate before every push; CI runs the same command on Python 3.10 and
+3.14 (checks `python (3.10)` and `python (3.14)`), and the check `gate` passes
+only when both did. It prints nothing when everything passes; set `PYTHON`
 to run it with another interpreter.
 
 ```sh

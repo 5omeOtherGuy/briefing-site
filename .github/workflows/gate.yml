@@ -14,7 +14,8 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  gate:
+  # One leg per Python version; its checks are `python (3.10)` and `python (3.14)`.
+  python:
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     strategy:
@@ -33,3 +34,19 @@ jobs:
 
       - name: Gate
         run: scripts/gate
+
+  # The single check named `gate`: it passes only when every matrix leg
+  # succeeded. `always()` makes it report failure, not skip, when a leg fails
+  # or is cancelled.
+  gate:
+    needs: python
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Require every matrix leg to succeed
+        env:
+          RESULT: ${{ needs.python.result }}
+        run: |
+          echo "python matrix: $RESULT"
+          test "$RESULT" = success

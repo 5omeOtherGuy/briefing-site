@@ -3,7 +3,7 @@
 ## Profile
 - Purpose: Static morning-briefing site generator: one JSON per project in, HTML with inline SVG charts out (stdlib only).
 - Stage: prototype (repository standard 2026-10-18)
-- Gate: `scripts/gate` (CI job `gate`)
+- Gate: `scripts/gate` (CI check `gate`)
 - Landing: direct to main after a green gate; agents land: yes (default)
 - Release: none; agents release: no (default)
 - Outside issues and PRs: agents triage (default); outside PRs merge: owner approves (default)
@@ -40,7 +40,7 @@ No deliberate deviations from the repository standard.
 - The examples are invented. Never add real, private or production briefing data: this repository is public and `docs/` publishes every file in `data/`.
 - Tests build credential-shaped strings from parts so the secret scan stays clean; never commit a literal token, even a fake one.
 - There are no live tests and no credentials; the gate is hermetic.
-- The CI job `gate` is a matrix, so its checks are named `gate (3.10)` and `gate (3.14)`.
+- CI runs the gate in the matrix job `python`, whose checks are named `python (3.10)` and `python (3.14)`; the aggregate job `gate` (check `gate`) succeeds only when both legs succeeded. Require `gate` in rulesets and tools.
 - `tools/install-git-hooks.sh` installs into the directory `git rev-parse --git-path hooks` names. When `git config core.hooksPath` is set (as in orbs), that is a global directory shared by every repository, so check it before running the script.
 
 ## Focused tests
